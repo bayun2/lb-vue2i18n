@@ -1,0 +1,62 @@
+{
+	"name": "lb-vue2i18n",
+	"displayName": "lb-vue2i18n",
+	"publisher": "rwt",
+	"icon": "icon.jpeg",
+	"description": "",
+	"version": "0.0.3",
+	"engines": {
+		"vscode": "^1.40.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.lbVue2i18n",
+		"onCommand:extension.lbDiffCNWithEN"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.lbVue2i18n",
+				"title": "lb:提取vue文件内的中文"
+			},
+			{
+				"command": "extension.lbDiffCNWithEN",
+				"title": "lb:提取英文语言包比中文语言包缺少的词条"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorFocus",
+					"command": "extension.lbVue2i18n"
+				},
+				{
+					"when": "editorFocus",
+					"command": "extension.lbDiffCNWithEN"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"test": "node ./test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.40.0",
+		"eslint": "^6.6.0",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.2",
+		"typescript": "^3.6.4",
+		"vscode-test": "^1.2.2"
+	},
+	"dependencies": {
+		"colors": "^1.4.0",
+		"global": "^4.4.0",
+		"lodash": "^4.17.15"
+	}
+}
