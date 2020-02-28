@@ -2,6 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode')
 const path = require('path')
+const preview = require('./lib/preview')
+const showLang = require('./lib/showLang')
 const { generate } = require('./lib/generate')
 const { diff } = require('./lib/diff')
 // this method is called when your extension is activated
@@ -18,7 +20,7 @@ function activate(context) {
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with  registerCommand
   // The commandId parameter must match the command field in package.json
-  let disposable = vscode.commands.registerCommand(
+  let lbVue2i18n = vscode.commands.registerCommand(
     'extension.lbVue2i18n',
     function() {
       // The code you place here will be executed every time your command is executed
@@ -43,8 +45,13 @@ function activate(context) {
       vscode.window.showInformationMessage(msg)
     }
   )
-
-  let disposable2 = vscode.commands.registerCommand(
+  
+  let hover = vscode.languages.registerHoverProvider([
+		{ language: "vue", scheme: "*" },
+		{ language: "javascript", scheme: "*" },
+		{ language: "typescript", scheme: "*" }
+	], preview);
+  let lbDiffCNWithEN = vscode.commands.registerCommand(
     'extension.lbDiffCNWithEN',
     function() {
       // /Users/rwt/gitlab/stock-activity
@@ -72,8 +79,19 @@ function activate(context) {
       })
     }
   )
-
-  context.subscriptions.concat([disposable, disposable2])
+  let showLang = vscode.commands.registerCommand(
+    'extension.showLang',
+		(uri) => {
+			showLang.init(uri, context)
+    }
+  )
+  //修改重置编辑器
+	vscode.workspace.onDidChangeTextDocument(
+		event => {
+			showLang.clearDecorations(event);
+		}
+	)
+  context.subscriptions.concat([lbVue2i18n, lbDiffCNWithEN, showLang, hover])
 }
 exports.activate = activate
 
