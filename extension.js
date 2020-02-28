@@ -79,7 +79,7 @@ function activate(context) {
       })
     }
   )
-  let showLang = vscode.commands.registerCommand(
+  let lbShowLang = vscode.commands.registerCommand(
     'extension.showLang',
 		(uri) => {
 			showLang.init(uri, context)
@@ -91,7 +91,7 @@ function activate(context) {
 			showLang.clearDecorations(event);
 		}
 	)
-  context.subscriptions.concat([lbVue2i18n, lbDiffCNWithEN, showLang, hover])
+  context.subscriptions.concat([lbVue2i18n, lbDiffCNWithEN, lbShowLang, hover])
 }
 exports.activate = activate
 
