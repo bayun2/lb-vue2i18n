@@ -79,10 +79,16 @@ function activate(context) {
       })
     }
   )
-  let lbShowLang = vscode.commands.registerCommand(
-    'extension.showLang',
+  let lbShowI18n = vscode.commands.registerCommand(
+    'extension.lbShowI18n',
 		(uri) => {
 			showLang.init(uri, context)
+    }
+  )
+  let lbHideI18n = vscode.commands.registerCommand(
+    'extension.lbHideI18n',
+		() => {
+			showLang.clearDecorations()
     }
   )
   //修改重置编辑器
@@ -91,7 +97,7 @@ function activate(context) {
 			showLang.clearDecorations(event);
 		}
 	)
-  context.subscriptions.concat([lbVue2i18n, lbDiffCNWithEN, lbShowLang, hover])
+  context.subscriptions.concat([lbVue2i18n, lbDiffCNWithEN, lbShowI18n, lbHideI18n, hover])
 }
 exports.activate = activate
 

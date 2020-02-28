@@ -12,9 +12,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.lbVue2i18n",
-		"onCommand:extension.lbDiffCNWithEN",
-		"onCommand:extension.showLang"
+		"*"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -28,8 +26,12 @@
 				"title": "lb:提取英文语言包比中文语言包缺少的词条"
 			},
 			{
-				"command": "extension.showLang",
+				"command": "extension.lbShowI18n",
 				"title": "lb:显示对应的中文语言"
+			},
+			{
+				"command": "extension.lbHideI18n",
+				"title": "lb:隐藏对应的中文语言"
 			}
 		],
 		"menus": {
@@ -44,7 +46,11 @@
 				},
 				{
 					"when": "editorFocus",
-					"command": "extension.showLang"
+					"command": "extension.lbShowI18n"
+				},
+				{
+					"when": "editorFocus",
+					"command": "extension.lbHideI18n"
 				}
 			]
 		}
