@@ -6,6 +6,7 @@ const preview = require('./lib/preview')
 const showLang = require('./lib/showLang')
 const { generate } = require('./lib/generate')
 const { diff } = require('./lib/diff')
+const { getPath } = require('./lib/langPath')
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -16,7 +17,6 @@ function activate(context) {
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
   console.log('Congratulations, your extension "lb-vue2i18n" is now active!')
-
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with  registerCommand
   // The commandId parameter must match the command field in package.json
@@ -40,7 +40,7 @@ function activate(context) {
       const rootPath = vscode.workspace.workspaceFolders[0].uri.path
       const hasReplaced = generate(currentlyOpenTabfilePath, rootPath)
       const msg = hasReplaced
-        ? '成功提取中文到{projectRoot}/lang/zh-CN.json内'
+        ? `成功提取中文到{projectRoot}/${getPath()}/zh-CN.json内`
         : '没有需要提取的内容'
       vscode.window.showInformationMessage(msg)
     }
@@ -56,8 +56,8 @@ function activate(context) {
     function() {
       // /Users/rwt/gitlab/stock-activity
       const rootPath = vscode.workspace.workspaceFolders[0].uri.path
-      const cnObj = require(path.join(rootPath, 'lang/zh-CN.json'))
-      const enObj = require(path.join(rootPath, 'lang/en.json'))
+      const cnObj = require(path.join(rootPath, `${getPath()}/zh-CN.json`))
+      const enObj = require(path.join(rootPath, `${getPath()}/zh-CN.json`))
       const diffObj = diff(cnObj, enObj)
       const newFile = vscode.Uri.parse(
         'untitled:' + path.join(rootPath, 'lang/diff.json')
