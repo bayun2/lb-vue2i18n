@@ -57,7 +57,7 @@ function activate(context) {
       // /Users/rwt/gitlab/stock-activity
       const rootPath = vscode.workspace.workspaceFolders[0].uri.path
       const cnObj = require(path.join(rootPath, `${getPath()}/zh-CN.json`))
-      const enObj = require(path.join(rootPath, `${getPath()}/zh-CN.json`))
+      const enObj = require(path.join(rootPath, `${getPath()}/en.json`))
       const diffObj = diff(cnObj, enObj)
       const newFile = vscode.Uri.parse(
         'untitled:' + path.join(rootPath, 'lang/diff.json')
