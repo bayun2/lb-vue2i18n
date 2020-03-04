@@ -12,8 +12,9 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.lbVue2i18n",
-		"onCommand:extension.lbDiffCNWithEN"
+		"onLanguage:vue",
+    "onLanguage:javascript",
+    "onLanguage:typescript"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -25,6 +26,14 @@
 			{
 				"command": "extension.lbDiffCNWithEN",
 				"title": "lb:提取英文语言包比中文语言包缺少的词条"
+			},
+			{
+				"command": "extension.lbShowI18n",
+				"title": "lb:显示对应的中文语言"
+			},
+			{
+				"command": "extension.lbHideI18n",
+				"title": "lb:隐藏对应的中文语言"
 			}
 		],
 		"menus": {
@@ -36,9 +45,33 @@
 				{
 					"when": "editorFocus",
 					"command": "extension.lbDiffCNWithEN"
+				},
+				{
+					"when": "editorFocus",
+					"command": "extension.lbShowI18n"
+				},
+				{
+					"when": "editorFocus",
+					"command": "extension.lbHideI18n"
 				}
 			]
-		}
+		},
+		"configuration": {
+      "type": "object",
+      "title": "vue-i18n",
+      "properties": {
+        "vue-i18n.i18nPaths": {
+          "type": "string",
+          "default": "",
+          "description": "翻译文件的目录（相对于项目根目录）"
+				},
+				"vue-i18n.sourceLocale": {
+          "type": "string",
+          "default": "zh-CN",
+          "description": "主要语言"
+        }
+      }
+    }
 	},
 	"scripts": {
 		"test": "node ./test/runTest.js"
@@ -57,6 +90,10 @@
 	"dependencies": {
 		"colors": "^1.4.0",
 		"global": "^4.4.0",
-		"lodash": "^4.17.15"
+		"lodash": "^4.17.15",
+		"deepmerge": "^4.2.2",
+		"small-linked-list": "0.0.3",
+		"flat": "^4.1.0",
+		"puid": "^1.0.7"
 	}
 }
