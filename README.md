@@ -15,3 +15,5 @@
   "langPath": "src/lang" // 默认 /lang
 }
 ```
+
+新增提取 js 文件内的中文

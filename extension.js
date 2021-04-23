@@ -29,7 +29,7 @@ function activate(context) {
       if (
         !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('vue')
       ) {
-        vscode.window.showInformationMessage('只能提取vue文件');
+        vscode.window.showInformationMessage('只能提取 vue 文件');
         return false;
       }
       // /Users/rwt/gitlab/stock-activity
@@ -43,20 +43,44 @@ function activate(context) {
   );
 
   let disposable2 = vscode.commands.registerCommand(
+    'extension.lbJS2i18n',
+    function () {
+      // The code you place here will be executed every time your command is executed
+      // /Users/rwt/gitlab/stock-activity/pages/index.vue
+      const currentlyOpenTabfilePath =
+        vscode.window.activeTextEditor.document.fileName;
+      if (
+        !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('js')
+      ) {
+        vscode.window.showInformationMessage('只能提取 JS 文件');
+        return false;
+      }
+      // /Users/rwt/gitlab/stock-activity
+      const rootPath = vscode.workspace.workspaceFolders[0].uri.path;
+      generate(
+        currentlyOpenTabfilePath,
+        rootPath,
+        vscode.window.showInformationMessage,
+        'js'
+      );
+    }
+  );
+
+  let disposable3 = vscode.commands.registerCommand(
     'extension.lbDiffCNWithEN',
     function () {
       diffCNWithEN();
     }
   );
 
-  let disposable3 = vscode.commands.registerCommand(
+  let disposable4 = vscode.commands.registerCommand(
     'extension.lbDiffCNWithHK',
     function () {
       diffCNWithHK();
     }
   );
 
-  let disposable4 = vscode.commands.registerCommand(
+  let disposable5 = vscode.commands.registerCommand(
     'extension.lbExportArchive',
     function () {
       // /Users/rwt/gitlab/stock-activity
@@ -71,6 +95,7 @@ function activate(context) {
     disposable2,
     disposable3,
     disposable4,
+    disposable5,
   ]);
 }
 
