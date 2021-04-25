@@ -12,7 +12,8 @@
 ```json
 "lbVue2i18n": {
   "locoExportKey": "xxxx", // 对应 loco 上的项目 api key
-  "langPath": "src/lang" // 默认 /lang
+  "langPath": "src/lang", // 默认 /lang
+  "vueType": "vue3" //是 vue3 还是 vue2, 默认 vue2，决定了输出到 vue 文件的是 this.$t or $t,vue3 大概率写在 setup 中不要加 this
 }
 ```
 
