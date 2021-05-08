@@ -4,7 +4,7 @@
 	"publisher": "rwt",
 	"icon": "icon.jpeg",
 	"description": "",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"engines": {
 		"vscode": "^1.55.0"
 	},
