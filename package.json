@@ -87,7 +87,6 @@
 		"form-data": "^4.0.0",
 		"global": "^4.4.0",
 		"loco-api-js": "^1.2.0",
-		"lodash": "^4.17.21",
 		"node-fetch": "^2.6.1"
 	}
 }
