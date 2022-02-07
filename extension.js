@@ -50,9 +50,10 @@ function activate(context) {
       const currentlyOpenTabfilePath =
         vscode.window.activeTextEditor.document.fileName;
       if (
-        !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('js')
+        !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('js') &&
+        !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('ts')
       ) {
-        vscode.window.showInformationMessage('只能提取 JS 文件');
+        vscode.window.showInformationMessage('只能提取 JS/TS 文件');
         return false;
       }
       // /Users/rwt/gitlab/stock-activity
