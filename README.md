@@ -9,11 +9,11 @@
 下载项目多语言文件，支持 Loco 翻译平台指定 project 下载到当前项目可以在项目根目录的 `package.json` 中设置
 
 ```json
-"lbVue2i18n": {
+"i18nExtractor": {
   // 对应 Loco 上的项目 API Key
   "locoExportKey": "xxxx", 
   // I18n 文件存储路径，默认 /lang
-  "langPath": "src/locales", 
+  "localePath": "src/locales", 
   // 是 Vue 3 还是 Vue 2，默认 Vue 2，决定了输出到 Vue 文件的是 this.$t or t，vue3 大概率
   // 写在 setup 中不要加 this，且不能加 $,vue3 $ 只能加载 vue 自己的内部变量上
   "vueType": "vue3",
