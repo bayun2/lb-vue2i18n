@@ -29,7 +29,7 @@ function activate(context) {
       if (
         !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('vue')
       ) {
-        vscode.window.showInformationMessage('仅支持从 Vue 文件内提取文本。');
+        vscode.window.showWarningMessage('仅支持从 Vue 文件内提取文本。');
         return false;
       }
       // /Users/rwt/gitlab/stock-activity
@@ -37,7 +37,7 @@ function activate(context) {
       generate(
         currentlyOpenTabfilePath,
         rootPath,
-        vscode.window.showInformationMessage
+        vscode.window.showWarningMessage
       );
     }
   );
@@ -51,9 +51,8 @@ function activate(context) {
         vscode.window.activeTextEditor.document.fileName;
 
       const extname = path.extname(currentlyOpenTabfilePath);
-
-      if (!/js|jsx|tsx|ts/i.match(extname)) {
-        vscode.window.showInformationMessage(
+      if (!extname.match(/(js|jsx|tsx|ts)$/i)) {
+        vscode.window.showWarningMessage(
           '仅支持 JavaScript / TypeScript 类型 [js, jsx, ts, tsx] 的文件。'
         );
         return false;

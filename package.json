@@ -23,43 +23,36 @@
     "commands": [
       {
         "command": "extension.lbVue2i18n",
-        "title": "lb: 提取 Vue 内的中文"
+        "title": "I18n 提取 Vue 内的中文"
       },
       {
         "command": "extension.lbJS2i18n",
-        "title": "lb: 提取 JS/TS/React 内的中文"
+        "title": "I18n 提取 JS/TS/React 内的中文"
       },
       {
         "command": "extension.lbDiffCNWithEN",
-        "title": "lb: 提取英文语言包比中文语言包缺少的词条"
+        "title": "I18n 提取英文语言包比中文语言包缺少的词条"
       },
       {
         "command": "extension.lbDiffCNWithHK",
-        "title": "lb: 提取繁体语言包比中文语言包缺少的词条"
+        "title": "I18n 提取繁体语言包比中文语言包缺少的词条"
       },
       {
         "command": "extension.lbExportArchive",
-        "title": "lb: 下载该项目多语言文件"
+        "title": "I18n 下载该项目多语言文件"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "when": "editorFocus",
-          "command": "extension.lbVue2i18n"
+          "command": "extension.lbVue2i18n",
+          "group": "I18n Extract"
         },
         {
           "when": "editorFocus",
-          "command": "extension.lbJS2i18n"
-        },
-        {
-          "command": "extension.lbDiffCNWithEN"
-        },
-        {
-          "command": "extension.lbDiffCNWithHK"
-        },
-        {
-          "command": "extension.lbExportArchive"
+          "command": "extension.lbJS2i18n",
+          "group": "I18n Extract"
         }
       ]
     }
@@ -68,7 +61,8 @@
     "lint": "eslint .",
     "pretest": "yarn run lint",
     "test": "jest",
-    "publish": "vsce publish"
+    "publish": "vsce publish",
+    "package": "vsce package"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
