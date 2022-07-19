@@ -23,11 +23,11 @@
     "commands": [
       {
         "command": "extension.lbVue2i18n",
-        "title": "lb: 提取 vue 文件内的中文"
+        "title": "lb: 提取 Vue 内的中文"
       },
       {
         "command": "extension.lbJS2i18n",
-        "title": "lb: 提取 js/ts 文件内的中文"
+        "title": "lb: 提取 JS/TS/React 内的中文"
       },
       {
         "command": "extension.lbDiffCNWithEN",
