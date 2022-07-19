@@ -29,7 +29,7 @@ function activate(context) {
       if (
         !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('vue')
       ) {
-        vscode.window.showInformationMessage('只能提取 vue 文件');
+        vscode.window.showInformationMessage('仅支持从 Vue 文件内提取文本。');
         return false;
       }
       // /Users/rwt/gitlab/stock-activity
@@ -49,13 +49,16 @@ function activate(context) {
       // /Users/rwt/gitlab/stock-activity/pages/index.vue
       const currentlyOpenTabfilePath =
         vscode.window.activeTextEditor.document.fileName;
-      if (
-        !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('js') &&
-        !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('ts')
-      ) {
-        vscode.window.showInformationMessage('只能提取 JS/TS 文件');
+
+      const extname = path.extname(currentlyOpenTabfilePath);
+
+      if (!/js|jsx|tsx|ts/i.match(extname)) {
+        vscode.window.showInformationMessage(
+          '仅支持 JavaScript / TypeScript 类型 [js, jsx, ts, tsx] 的文件。'
+        );
         return false;
       }
+
       // /Users/rwt/gitlab/stock-activity
       const rootPath = vscode.workspace.workspaceFolders[0].uri.path;
       generate(
