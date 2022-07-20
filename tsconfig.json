@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "strict": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "useDefineForClassFields": true,
+    "noImplicitAny": false,
+    "baseUrl": "."
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules", "./test/example/**/*", ".vscode-test"]
+}

@@ -1,4 +1,4 @@
-# lb-vue2i18n README
+# VS Code I18n Extractor
 
 支持从 Vue, JavaScript, TypeScript, React 的文件中，提取硬编码的中文，把他们转换成 I18n 变量，将提取后的语言合并到语言包 `{workDir}/lang/zh-CN.json`。
 
@@ -8,7 +8,7 @@
 
 下载项目多语言文件，支持 Loco 翻译平台指定 project 下载到当前项目可以在项目根目录的 `package.json` 中设置
 
-```json
+```json5
 "i18nExtractor": {
   // 对应 Loco 上的项目 API Key
   "locoExportKey": "xxxx", 

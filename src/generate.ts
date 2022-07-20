@@ -1,14 +1,13 @@
 require('colors');
-const path = require('path');
-const fs = require('fs');
-const { getConfig } = require('./utils/getConfig');
-const { generateKeyPrefix } = require('./filepath');
+import fs from 'fs';
+import path from 'path';
+import { generateKeyPrefix } from './filepath';
+import { getConfig } from './utils/getConfig';
 
 let i18nFile;
 let messages;
 let messagesHash = {};
-let generate = 0;
-let config = {};
+let generated = 0;
 let rootPath;
 
 const initMessage = () => {
@@ -22,7 +21,7 @@ const initMessage = () => {
         }
       });
       //获取最大的 index
-      generate =
+      generated =
         Math.max(
           ...Object.keys(messages).map(
             // @ts-ignore
@@ -30,7 +29,7 @@ const initMessage = () => {
           ),
           Object.keys(messages).length
         ) || 0;
-      // generate = Object.keys(messages).length || 1;
+      // generated = Object.keys(messages).length || 1;
     } catch (e) {
       console.log(e);
     }
@@ -54,9 +53,8 @@ const writeMessage = () => {
  */
 const getCurrentKey = (match, file) => {
   if (messagesHash[match]) return messagesHash[match];
-  generate++;
-  let key =
-    generateKeyPrefix(rootPath, file, config.maxKeyPrefixDepth || 0) + generate;
+  generated++;
+  let key = generateKeyPrefix(rootPath, file, getConfig()) + generated;
   if (!messages[key]) return key.toLowerCase();
   return getCurrentKey(match, file);
 };
@@ -95,7 +93,7 @@ const generateVueFile = (file, type, vueType) => {
         } else {
           //对于 `` 拼接字符串的替换
           let matchIndex = 0;
-          let matchArr = [];
+          let matchArr: string[] = [];
           match = match.replace(/(\${)([^{}]+)(})/gim, (_, prev, match) => {
             matchArr.push(match);
             return `{${matchIndex++}}`;
@@ -137,8 +135,8 @@ const generateVueFile = (file, type, vueType) => {
           if (match.match(/{{[^{}]+}}/)) {
             //对于 muscache 中部分的替换
             let matchIndex = 0;
-            let matchArr = [];
-            match = match.replace(/{{([^{}]+)}}/gim, (_, match) => {
+            let matchArr: string[] = [];
+            match = match.replace(/{{([^{}]+)}}/gim, (_, match: string) => {
               matchArr.push(match);
               return `{${matchIndex++}}`;
             });
@@ -213,22 +211,14 @@ const generateVueFile = (file, type, vueType) => {
   return true;
 };
 
-module.exports.generate = (
-  file,
-  rPath,
-  showInformationMessage,
-  type = 'vue'
-) => {
+const generate = (file, rPath, showInformationMessage, type = 'vue') => {
   rootPath = rPath;
-  config = getConfig();
 
-  console.log('I18n extract load config:', config);
-
-  const { localePath, vueType, ext = 'json' } = config;
+  const { localePath, vueType, ext = 'json' } = getConfig();
   i18nFile = path.join(rootPath, localePath, `zh-CN.${ext}`);
   messages = {};
   messagesHash = {};
-  generate = 1;
+  generated = 1;
   initMessage();
   const hasReplaced = generateVueFile(file, type, vueType);
   if (hasReplaced) {
@@ -239,3 +229,5 @@ module.exports.generate = (
     : '没有需要提取的内容';
   showInformationMessage(msg);
 };
+
+export { generate };
