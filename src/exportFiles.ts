@@ -1,14 +1,14 @@
 require('colors');
-const path = require('path');
-const fs = require('fs');
-const LocoClient = require('loco-api-js');
-const { getConfig } = require('./utils/getConfig');
+import fs from 'fs';
+import LocoClient from 'loco-api-js';
+import path from 'path';
+import { getConfig } from './utils/getConfig';
 
-const writeMessage = (json, filePath) => {
+const writeMessage = (json: Object, filePath: string) => {
   fs.writeFileSync(filePath, JSON.stringify(json, null, '  ') + '\n', 'utf8');
 };
 
-module.exports.exportFiles = async (rootPath, showInformationMessage) => {
+export const exportFiles = async (rootPath: string, showInformationMessage) => {
   const { localePath, locoExportKey } = getConfig();
 
   let loco;

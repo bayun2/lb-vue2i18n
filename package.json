@@ -1,6 +1,6 @@
 {
   "name": "lb-vue2i18n",
-  "displayName": "i18n-extractor",
+  "displayName": "I18n Extractor",
   "publisher": "rwt",
   "icon": "icon.jpeg",
   "description": "",
@@ -16,30 +16,40 @@
     "onCommand:extension.lbJS2i18n",
     "onCommand:extension.lbDiffCNWithEN",
     "onCommand:extension.lbDiffCNWithHK",
-    "onCommand:extension.lbExportArchive"
+    "onCommand:extension.lbExportArchive",
+    "onCommand:extension.lbConvertCNToHK",
+    "onCommand:extension.lbConvertTStoCN"
   ],
-  "main": "./extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "extension.lbVue2i18n",
-        "title": "I18n 提取 Vue 内的中文"
+        "title": "I18n Extractor: 提取 Vue 内的中文"
       },
       {
         "command": "extension.lbJS2i18n",
-        "title": "I18n 提取 JS/TS/React 内的中文"
+        "title": "I18n Extractor: 提取 JS/TS/React 内的中文"
       },
       {
         "command": "extension.lbDiffCNWithEN",
-        "title": "I18n 提取英文语言包比中文语言包缺少的词条"
+        "title": "I18n Extractor: 提取英文语言包比中文语言包缺少的词条"
       },
       {
         "command": "extension.lbDiffCNWithHK",
-        "title": "I18n 提取繁体语言包比中文语言包缺少的词条"
+        "title": "I18n Extractor: 提取繁体语言包比中文语言包缺少的词条"
       },
       {
         "command": "extension.lbExportArchive",
-        "title": "I18n 下载该项目多语言文件"
+        "title": "I18n Extractor: 下载该项目多语言文件"
+      },
+      {
+        "command": "extension.lbConvertCNToHK",
+        "title": "I18n Extractor: Convert (CN -> HK)"
+      },
+      {
+        "command": "extension.lbConvertTStoCN",
+        "title": "I18n Extractor: Convert (HK -> CN)"
       }
     ],
     "menus": {
@@ -47,12 +57,12 @@
         {
           "when": "editorFocus",
           "command": "extension.lbVue2i18n",
-          "group": "I18n Extract"
+          "group": "I18n Extractor"
         },
         {
           "when": "editorFocus",
           "command": "extension.lbJS2i18n",
-          "group": "I18n Extract"
+          "group": "I18n Extractor"
         }
       ]
     }
@@ -61,22 +71,32 @@
     "lint": "eslint .",
     "pretest": "yarn run lint",
     "test": "jest",
-    "publish": "vsce publish",
-    "package": "vsce package"
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "publish": "yarn run package && vsce publish"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
     "@types/glob": "^7.1.3",
+    "@types/jest": "^28.1.6",
+    "@types/lodash": "^4.14.182",
     "@types/mocha": "^8.0.4",
     "@types/node": "^18.0.6",
-    "@types/vscode": "^1.55.0",
+    "@types/opencc-js": "^1.0.0",
+    "@types/vscode": "^1.69.0",
     "babel-jest": "^28.1.3",
+    "babel-loader": "^8.2.5",
     "eslint": "^7.19.0",
     "glob": "^7.1.6",
     "mocha": "^8.2.1",
-    "typescript": "^4.1.3",
-    "vscode-test": "^1.5.0"
+    "ts-jest": "^28.0.7",
+    "ts-loader": "^9.2.2",
+    "typescript": "^4.7.4",
+    "vscode-test": "^1.5.0",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
   },
   "dependencies": {
     "colors": "^1.4.0",
@@ -86,6 +106,7 @@
     "jest": "^28.1.3",
     "loco-api-js": "^1.2.0",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "opencc-js": "^1.0.4"
   }
 }

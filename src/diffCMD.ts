@@ -1,10 +1,14 @@
-const vscode = require('vscode');
-const path = require('path');
-const { getConfig } = require('./utils/getConfig');
-const { diff } = require('./utils/diff');
+import path from 'path';
+import vscode from 'vscode';
+import { diff } from './utils/diff';
+import { getConfig } from './utils/getConfig';
 
 const diffCommon = (source, target) => {
-  const rootPath = vscode.workspace.workspaceFolders[0].uri.path;
+  const rootPath = vscode.workspace.workspaceFolders?.[0].uri.path;
+  if (!rootPath) {
+    return;
+  }
+
   const { localePath } = getConfig();
   const cnObj = require(path.join(rootPath, localePath, `${source}.json`));
   const enObj = require(path.join(rootPath, localePath, `${target}.json`));
@@ -30,9 +34,9 @@ const diffCommon = (source, target) => {
   });
 };
 
-module.exports.diffCNWithHK = () => {
+export const diffCNWithHK = () => {
   diffCommon('zh-CN', 'zh-HK');
 };
-module.exports.diffCNWithEN = () => {
+export const diffCNWithEN = () => {
   diffCommon('zh-CN', 'en');
 };

@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 
-const request = async (url, opts = {}) => {
+const request = async (url: string, opts = {}) => {
   try {
     console.log(await (await fetch(url, opts)).json());
   } catch (error) {
@@ -9,7 +9,11 @@ const request = async (url, opts = {}) => {
   }
 };
 
-module.exports.addANewTranslatableAsset = async (apiKey, key, value) => {
+export const addANewTranslatableAsset = async (
+  apiKey: string,
+  key: string,
+  value: string
+) => {
   let formData = new FormData();
   formData.append(key, value);
   console.log('hha');

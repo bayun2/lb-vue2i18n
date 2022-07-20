@@ -1,12 +1,11 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-const vscode = require('vscode');
-const path = require('path');
-const { generate } = require('./lib/generate');
-const { exportFiles } = require('./lib/exportFiles');
-const { diffCNWithEN, diffCNWithHK } = require('./lib/diffCMD');
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+import path from 'path';
+import vscode from 'vscode';
+import { diffCNWithEN, diffCNWithHK } from './diffCMD';
+import { exportFiles } from './exportFiles';
+import { generate } from './generate';
+import { convertCurrentDocument } from './opencc';
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -22,18 +21,23 @@ function activate(context) {
   let disposable = vscode.commands.registerCommand(
     'extension.lbVue2i18n',
     function () {
+      const document = vscode.window.activeTextEditor?.document;
+      if (!document) {
+        return;
+      }
+
       // The code you place here will be executed every time your command is executed
       // /Users/rwt/gitlab/stock-activity/pages/index.vue
-      const currentlyOpenTabfilePath =
-        vscode.window.activeTextEditor.document.fileName;
+      const currentlyOpenTabfilePath = document.fileName;
       if (
         !path.extname(currentlyOpenTabfilePath).toLowerCase().includes('vue')
       ) {
         vscode.window.showWarningMessage('仅支持从 Vue 文件内提取文本。');
         return false;
       }
+
       // /Users/rwt/gitlab/stock-activity
-      const rootPath = vscode.workspace.workspaceFolders[0].uri.path;
+      const rootPath = vscode.workspace.workspaceFolders?.[0].uri.path;
       generate(
         currentlyOpenTabfilePath,
         rootPath,
@@ -45,10 +49,14 @@ function activate(context) {
   let disposable2 = vscode.commands.registerCommand(
     'extension.lbJS2i18n',
     function () {
+      const document = vscode.window.activeTextEditor?.document;
+      if (!document) {
+        return;
+      }
+
       // The code you place here will be executed every time your command is executed
       // /Users/rwt/gitlab/stock-activity/pages/index.vue
-      const currentlyOpenTabfilePath =
-        vscode.window.activeTextEditor.document.fileName;
+      const currentlyOpenTabfilePath = document.fileName;
 
       const extname = path.extname(currentlyOpenTabfilePath);
       if (!extname.match(/(js|jsx|tsx|ts)$/i)) {
@@ -59,7 +67,7 @@ function activate(context) {
       }
 
       // /Users/rwt/gitlab/stock-activity
-      const rootPath = vscode.workspace.workspaceFolders[0].uri.path;
+      const rootPath = vscode.workspace.workspaceFolders?.[0].uri.path;
       generate(
         currentlyOpenTabfilePath,
         rootPath,
@@ -87,9 +95,26 @@ function activate(context) {
     'extension.lbExportArchive',
     function () {
       // /Users/rwt/gitlab/stock-activity
-      const rootPath = vscode.workspace.workspaceFolders[0].uri.path;
+      const rootPath = vscode.workspace.workspaceFolders?.[0].uri.path;
+      if (!rootPath) {
+        return;
+      }
 
       exportFiles(rootPath, vscode.window.showInformationMessage);
+    }
+  );
+
+  let disposable6 = vscode.commands.registerCommand(
+    'extension.lbConvertCNToHK',
+    function () {
+      convertCurrentDocument({ from: 'zh-CN', to: 'zh-HK' });
+    }
+  );
+
+  let disposable7 = vscode.commands.registerCommand(
+    'extension.lbConvertTStoCN',
+    function () {
+      convertCurrentDocument({ from: 'zh-HK', to: 'zh-CN' });
     }
   );
 
@@ -99,13 +124,12 @@ function activate(context) {
     disposable3,
     disposable4,
     disposable5,
+    disposable6,
+    disposable7,
   ]);
 }
 
 // this method is called when your extension is deactivated
 function deactivate() {}
 
-module.exports = {
-  activate,
-  deactivate,
-};
+export { activate, deactivate };
