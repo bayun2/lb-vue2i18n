@@ -38,15 +38,29 @@ export const convert = (text: string, options: IConvertOptions): string => {
 };
 
 export const convertCurrentDocument = (options) => {
-  const document = vscode.window.activeTextEditor?.document;
-
-  if (!document) {
+  if (!vscode.window.activeTextEditor) {
     vscode.window.showInformationMessage('没有打开任何文件，无法转换。');
     return;
   }
 
-  const out = convert(document.getText(), options);
-  const writeData = Buffer.from(out, 'utf8');
-  vscode.workspace.fs.writeFile(document.uri, writeData);
+  const editor = vscode.window.activeTextEditor;
+  const { document, selection } = editor;
+
+  if (!selection.isEmpty) {
+    const out = convert(document.getText(selection), options);
+
+    editor
+      .edit((builder) => {
+        builder.replace(selection, out);
+      })
+      .then(() => {
+        document.save();
+      });
+  } else {
+    const out = convert(document.getText(), options);
+
+    const writeData = Buffer.from(out, 'utf8');
+    vscode.workspace.fs.writeFile(document.uri, writeData);
+  }
   vscode.window.showInformationMessage('文档语言转换完成。');
 };
