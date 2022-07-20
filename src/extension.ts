@@ -6,6 +6,7 @@ import { diffCNWithEN, diffCNWithHK } from './diffCMD';
 import { exportFiles } from './exportFiles';
 import { generate } from './generate';
 import { convertCurrentDocument } from './opencc';
+import { getRootDir } from './utils';
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -37,12 +38,8 @@ function activate(context) {
       }
 
       // /Users/rwt/gitlab/stock-activity
-      const rootPath = vscode.workspace.workspaceFolders?.[0].uri.path;
-      generate(
-        currentlyOpenTabfilePath,
-        rootPath,
-        vscode.window.showWarningMessage
-      );
+      const rootPath = getRootDir();
+      generate(currentlyOpenTabfilePath, rootPath);
     }
   );
 
@@ -67,13 +64,8 @@ function activate(context) {
       }
 
       // /Users/rwt/gitlab/stock-activity
-      const rootPath = vscode.workspace.workspaceFolders?.[0].uri.path;
-      generate(
-        currentlyOpenTabfilePath,
-        rootPath,
-        vscode.window.showInformationMessage,
-        'js'
-      );
+      const rootPath = getRootDir();
+      generate(currentlyOpenTabfilePath, rootPath, 'js');
     }
   );
 
@@ -95,7 +87,7 @@ function activate(context) {
     'extension.lbExportArchive',
     function () {
       // /Users/rwt/gitlab/stock-activity
-      const rootPath = vscode.workspace.workspaceFolders?.[0].uri.path;
+      const rootPath = getRootDir();
       if (!rootPath) {
         return;
       }

@@ -1,4 +1,3 @@
-require('colors');
 import fs from 'fs';
 import LocoClient from 'loco-api-js';
 import path from 'path';

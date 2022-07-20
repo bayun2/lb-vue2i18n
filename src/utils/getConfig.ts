@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import vscode from 'vscode';
+import { getRootDir } from '.';
+import { readJSONFile } from './filepath';
 
 type VueType = 'vue2' | 'vue3';
 
@@ -34,18 +36,20 @@ const DEFAULT_CONFIG: IConfig = {
 };
 
 export const getConfig = (): IConfig => {
-  const rootPath = vscode.workspace.workspaceFolders?.[0].uri.path;
+  const rootPath = getRootDir();
   if (!rootPath) {
     return DEFAULT_CONFIG;
   }
 
   const packagePath = path.join(rootPath, 'package.json');
+
   let packageJson;
   if (fs.existsSync(packagePath)) {
-    delete require.cache[packagePath];
-    packageJson = require(packagePath);
+    packageJson = readJSONFile(packagePath);
   } else {
-    vscode.window.showInformationMessage('项目根目录缺少 package.json');
+    vscode.window.showWarningMessage(
+      '项目根目录缺少 package.json，无法正确运行。'
+    );
     return DEFAULT_CONFIG;
   }
 
@@ -56,16 +60,22 @@ export const getConfig = (): IConfig => {
     i18nExtractor = packageJson.lbVue2i18n;
   }
 
-  const config = Object.assign({}, DEFAULT_CONFIG);
+  let config: any = {};
 
   if (i18nExtractor) {
+    config.rootPath = rootPath;
     config.locoExportKey = i18nExtractor.locoExportKey;
     // DEPRECATED: langPath 废弃，改用 localePath
-    config.localePath = i18nExtractor.localePath || i18nExtractor.langPath;
-    config.ext = i18nExtractor.ext;
-    config.vueType = i18nExtractor.vueType;
-    config.keyPrefixMaxDepth = i18nExtractor.maxKeyPrefixDepth;
-    config.stripKeyPrefix = i18nExtractor.stripKeyPrefix || '';
+    config.localePath =
+      i18nExtractor.localePath ||
+      i18nExtractor.langPath ||
+      DEFAULT_CONFIG.localePath;
+    config.ext = i18nExtractor.ext || DEFAULT_CONFIG.ext;
+    config.vueType = i18nExtractor.vueType || DEFAULT_CONFIG.vueType;
+    config.keyPrefixMaxDepth =
+      i18nExtractor.keyPrefixMaxDepth || DEFAULT_CONFIG.keyPrefixMaxDepth;
+    config.stripKeyPrefix =
+      i18nExtractor.stripKeyPrefix || DEFAULT_CONFIG.stripKeyPrefix;
   }
 
   return config;

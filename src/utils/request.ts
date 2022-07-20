@@ -16,7 +16,7 @@ export const addANewTranslatableAsset = async (
 ) => {
   let formData = new FormData();
   formData.append(key, value);
-  console.log('hha');
+
   return request('https://localise.biz/api/assets', {
     method: 'POST',
     headers: {
