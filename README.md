@@ -20,6 +20,9 @@
   // 设置最大的 I18n key 生成文件夹组合层数，默认：0 (不限制)
   // I18n 提取的时候是用文件路径来组合的，例如：{workDir}/src/pages/users/index.vue -> src_pages_users_index_1
   // 这个参数可以控制最大文件夹层数，比如设置 2，会用上面最大两层文件夹作为 key，生成的 key 会是 pages_users_index_1
-  "keyPrefixMaxDepth": 5
+  "keyPrefixMaxDepth": 5,
+  // 生成 I18n key 的时候，去掉 key 的前缀
+  // 例如：例如：stripKeyPrefix: "src/pages"，原本生成 src_pages_users_show_100 会变成 users_show_100
+  "stripKeyPrefix": ''
 }
 ```
