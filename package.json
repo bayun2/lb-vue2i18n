@@ -63,6 +63,11 @@
           "when": "editorFocus",
           "command": "extension.lbJS2i18n",
           "group": "I18n Extractor"
+        },
+        {
+          "when": "editorFocus",
+          "command": "extension.lbExportArchive",
+          "group": "I18n Extractor"
         }
       ]
     }
