@@ -46,3 +46,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.5.1] - 2022-07-20
 
 - 新增下载该项目多语言文件菜单项
+
+## [0.6.0] - 2022-07-20
+
+- 改进 package.json 的配置读取，从当前文件最近的地方找 package.json
+- 繁体、简体转换命令改进，可以允许只转换文档选区的内容，如果未选择才做整个文件转换。
