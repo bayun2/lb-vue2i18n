@@ -1,7 +1,7 @@
-require('colors');
 import fs from 'fs';
 import path from 'path';
-import { generateKeyPrefix } from './filepath';
+import vscode from 'vscode';
+import { generateKeyPrefix, readJSONFile } from './utils/filepath';
 import { getConfig } from './utils/getConfig';
 
 let i18nFile;
@@ -13,8 +13,7 @@ let rootPath;
 const initMessage = () => {
   if (fs.existsSync(i18nFile)) {
     try {
-      delete require.cache[i18nFile];
-      messages = require(i18nFile);
+      messages = readJSONFile(i18nFile);
       Object.keys(messages).forEach((key) => {
         if (typeof messages[key] === 'string') {
           messagesHash[messages[key]] = key;
@@ -54,7 +53,7 @@ const writeMessage = () => {
 const getCurrentKey = (match, file) => {
   if (messagesHash[match]) return messagesHash[match];
   generated++;
-  let key = generateKeyPrefix(rootPath, file, getConfig()) + generated;
+  let key = generateKeyPrefix(file, getConfig()) + generated;
   if (!messages[key]) return key.toLowerCase();
   return getCurrentKey(match, file);
 };
@@ -124,7 +123,7 @@ const generateVueFile = (file, type, vueType) => {
     });
   };
 
-  const replaceTemplate = (oriContent) => {
+  const replaceTemplate = (oriContent: string) => {
     return oriContent.replace(/<template(.|\n|\r)*template>/gim, (match) => {
       return match.replace(
         /(\w+='|\w+="|>|'|")([^'"<>]*[\u4e00-\u9fa5]+[^'"<>]*)(['"<])/gim,
@@ -132,6 +131,7 @@ const generateVueFile = (file, type, vueType) => {
           match = match.trim();
           let result = '';
           let currentKey;
+
           if (match.match(/{{[^{}]+}}/)) {
             //对于 muscache 中部分的替换
             let matchIndex = 0;
@@ -211,23 +211,31 @@ const generateVueFile = (file, type, vueType) => {
   return true;
 };
 
-const generate = (file, rPath, showInformationMessage, type = 'vue') => {
-  rootPath = rPath;
+const generate = (file: string, rootPath: string | undefined, type = 'vue') => {
+  if (!rootPath) {
+    vscode.window.showErrorMessage('rootPath 没有正确获取');
+    return;
+  }
 
   const { localePath, vueType, ext = 'json' } = getConfig();
   i18nFile = path.join(rootPath, localePath, `zh-CN.${ext}`);
+  if (!fs.existsSync(i18nFile)) {
+    vscode.window.showErrorMessage(`I18n 文件："${i18nFile}" 没有找到`);
+    return;
+  }
+
   messages = {};
   messagesHash = {};
   generated = 1;
   initMessage();
+
   const hasReplaced = generateVueFile(file, type, vueType);
   if (hasReplaced) {
     writeMessage();
+    vscode.window.showInformationMessage(`成功提取中文到 ${i18nFile} 内`);
+  } else {
+    vscode.window.showWarningMessage('没有需要提取的内容');
   }
-  const msg = hasReplaced
-    ? `成功提取中文到 ${i18nFile} 内`
-    : '没有需要提取的内容';
-  showInformationMessage(msg);
 };
 
 export { generate };
