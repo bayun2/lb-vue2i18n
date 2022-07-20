@@ -37,7 +37,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 }
 ```
 
-## [0.4.0] - 2022-07-20
+## [0.5.0] - 2022-07-20
 
 - 新增 OpenCC 用来实现简体转换繁体（香港），也可以繁体转换简体，以及提供相应的命令转换当前打开的文档。
 - 新增  配置，用于定义生成 I18n key 的时候，清理匹配的前缀（缩短 Key 的长度）。
