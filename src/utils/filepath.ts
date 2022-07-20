@@ -44,4 +44,25 @@ const readJSONFile = (file: string): Object => {
   return JSON.parse(content);
 };
 
+import vscode = require('vscode');
+
+export function getWorkspaceFolder(
+  document?: vscode.TextDocument
+): string | undefined {
+  if (vscode.window.activeTextEditor) {
+    document = vscode.window.activeTextEditor.document;
+  }
+
+  if (!document) {
+    return undefined;
+  }
+
+  let rootDir = vscode.workspace.getWorkspaceFolder(document.uri);
+  if (!rootDir) {
+    return path.dirname(document.uri.fsPath);
+  }
+
+  return rootDir.uri.fsPath;
+}
+
 export { generateKeyPrefix, readJSONFile };

@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import vscode from 'vscode';
-import { getRootDir } from '.';
-import { readJSONFile } from './filepath';
+import { getWorkspaceFolder, readJSONFile } from './filepath';
 
 type VueType = 'vue2' | 'vue3';
 
@@ -37,7 +36,7 @@ const DEFAULT_CONFIG: IConfig = {
 
 const findNearPackageJSON = () => {
   const document = vscode.window.activeTextEditor?.document;
-  const rootPath = getRootDir();
+  const rootPath = getWorkspaceFolder();
   if (!rootPath) {
     return 'package.json';
   }
@@ -59,13 +58,10 @@ const findNearPackageJSON = () => {
 };
 
 export const getConfig = (): IConfig => {
-  const rootPath = getRootDir();
-  if (!rootPath) {
-    return DEFAULT_CONFIG;
-  }
-
   const packagePath = findNearPackageJSON();
-  // console.log('------------', packagePath);
+  const rootPath = path.dirname(packagePath);
+
+  DEFAULT_CONFIG.rootPath = rootPath;
 
   let packageJson;
   if (fs.existsSync(packagePath)) {
