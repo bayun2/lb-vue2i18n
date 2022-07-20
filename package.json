@@ -65,7 +65,6 @@
           "group": "I18n Extractor"
         },
         {
-          "when": "editorFocus",
           "command": "extension.lbExportArchive",
           "group": "I18n Extractor"
         }
