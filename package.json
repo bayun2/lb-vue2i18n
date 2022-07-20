@@ -72,8 +72,8 @@
     }
   },
   "scripts": {
-    "lint": "eslint .",
-    "pretest": "yarn run lint",
+    "lint": "yarn eslint .",
+    "pretest": "yarn lint",
     "test": "jest",
     "compile": "webpack",
     "watch": "webpack --watch",
