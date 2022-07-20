@@ -104,7 +104,7 @@ function activate(context) {
   );
 
   let disposable7 = vscode.commands.registerCommand(
-    'extension.lbConvertTStoCN',
+    'extension.lbConvertTCtoCN',
     function () {
       convertCurrentDocument({ from: 'zh-HK', to: 'zh-CN' });
     }
