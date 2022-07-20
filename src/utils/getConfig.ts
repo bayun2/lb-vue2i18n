@@ -35,13 +35,37 @@ const DEFAULT_CONFIG: IConfig = {
   locoExportKey: '',
 };
 
+const findNearPackageJSON = () => {
+  const document = vscode.window.activeTextEditor?.document;
+  const rootPath = getRootDir();
+  if (!rootPath) {
+    return 'package.json';
+  }
+
+  if (!document) {
+    return path.join(rootPath, 'package.json');
+  }
+
+  // 递归寻找最近的 package.json
+  let parentDir = path.dirname(document.uri.path);
+  while (!fs.existsSync(path.join(parentDir, 'package.json'))) {
+    parentDir = path.join(parentDir, '..');
+    if (parentDir == rootPath || parentDir == '') {
+      return path.join(rootPath, 'package.json');
+    }
+  }
+
+  return path.join(parentDir, 'package.json');
+};
+
 export const getConfig = (): IConfig => {
   const rootPath = getRootDir();
   if (!rootPath) {
     return DEFAULT_CONFIG;
   }
 
-  const packagePath = path.join(rootPath, 'package.json');
+  const packagePath = findNearPackageJSON();
+  // console.log('------------', packagePath);
 
   let packageJson;
   if (fs.existsSync(packagePath)) {
