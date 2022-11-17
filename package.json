@@ -111,6 +111,6 @@
     "loco-api-js": "^1.2.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
-    "opencc-js": "^1.0.4"
+    "opencc-js": "^1.0.5"
   }
 }
