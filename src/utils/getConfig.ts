@@ -7,7 +7,7 @@ type VueType = 'vue2' | 'vue3';
 
 export interface IConfig {
   rootPath: string;
-  locoExportKey: string;
+  locoExportKey?: string;
   localePath: string;
   // I18n 文件扩展名，默认 json，多语言文件后缀不一定是 json
   ext: string;
@@ -84,7 +84,7 @@ export const getConfig = (): IConfig => {
 
   if (i18nExtractor) {
     config.rootPath = rootPath;
-    config.locoExportKey = i18nExtractor.locoExportKey;
+    config.locoExportKey = i18nExtractor.locoExportKey || '';
     // DEPRECATED: langPath 废弃，改用 localePath
     config.localePath =
       i18nExtractor.localePath ||

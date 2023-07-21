@@ -51,3 +51,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - 改进 package.json 的配置读取，从当前文件最近的地方找 package.json
 - 繁体、简体转换命令改进，可以允许只转换文档选区的内容，如果未选择才做整个文件转换。
+
+## [0.7.0] - 2023-07-21
+- 将 locoExportKey 配置改成可选，当不设置 locoExportKey 时只是将从 loco 下载多语言功能屏蔽
