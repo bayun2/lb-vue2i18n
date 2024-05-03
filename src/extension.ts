@@ -124,7 +124,7 @@ function activate(context) {
     }
   );
 
-  context.subscriptions.concat([
+  context.subscriptions.push(...[
     disposable,
     disposable2,
     disposable3,
