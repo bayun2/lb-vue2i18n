@@ -6,6 +6,11 @@
 
 ![demo](https://cdn-support.lbkrs.com/uploads/files/201912/CkYBSKTn1pmcScE3mueYCFCcKCWCiKCc.gif)
 
+支持快捷键快速提取光标选中词组的多语言功能
+
+![demo](https://assets-canary.lbkrs.com/uploads/8086ed21-9ddb-472b-a022-05c21a2e971b/20240503-180221.gif)
+
+
 下载项目多语言文件，支持 Loco 翻译平台指定 project 下载到当前项目可以在项目根目录的 `package.json` 中设置
 
 ```json5
