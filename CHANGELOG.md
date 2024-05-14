@@ -54,6 +54,3 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [0.7.0] - 2023-07-21
 - 将 locoExportKey 配置改成可选，当不设置 locoExportKey 时只是将从 loco 下载多语言功能屏蔽
-- 
-## [0.8.1] - 2024-05-03
-- 支持快捷键「Ctrl+Shift+t」快速提取光标选中词组的多语言功能，所选内容最少要包含前后的单/双引号
