@@ -4,7 +4,7 @@ import path from 'path';
 import vscode from 'vscode';
 import { diffCNWithEN, diffCNWithHK } from './diffCMD';
 import { exportFiles } from './exportFiles';
-import { generate, generateSections } from './generate';
+import { generate } from './generate';
 import { convertCurrentDocument } from './opencc';
 import { getRootDir } from './utils';
 
@@ -110,20 +110,6 @@ function activate(context) {
     }
   );
 
-  let disposable8 = vscode.commands.registerTextEditorCommand(
-    'extension.lbSelection2i18n',
-    (textEditor) => {
-      const selectionArray = generateSections(textEditor);
-      if (!selectionArray) return;
-
-      textEditor.edit((editor) => {
-        selectionArray.forEach(({ selection, text }) => {
-          editor.replace(selection, text)
-        })
-      });
-    }
-  );
-
   context.subscriptions.concat([
     disposable,
     disposable2,
@@ -132,11 +118,10 @@ function activate(context) {
     disposable5,
     disposable6,
     disposable7,
-    disposable8,
   ]);
 }
 
 // this method is called when your extension is deactivated
-function deactivate() { }
+function deactivate() {}
 
 export { activate, deactivate };

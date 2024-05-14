@@ -4,7 +4,7 @@
   "publisher": "rwt",
   "icon": "icon.jpeg",
   "description": "",
-  "version": "0.8.0",
+  "version": "0.7.0",
   "engines": {
     "vscode": "^1.55.0"
   },
@@ -18,8 +18,7 @@
     "onCommand:extension.lbDiffCNWithHK",
     "onCommand:extension.lbExportArchive",
     "onCommand:extension.lbConvertCNToHK",
-    "onCommand:extension.lbConvertTCtoCN",
-    "onCommand:extension.lbSelection2i18n"
+    "onCommand:extension.lbConvertTCtoCN"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -51,10 +50,6 @@
       {
         "command": "extension.lbConvertTCtoCN",
         "title": "I18n Extractor: Convert (HK -> CN)"
-      },
-      {
-        "command": "extension.lbSelection2i18n",
-        "title": "I18n Extractor: 提取选中内容中的中文"
       }
     ],
     "menus": {
@@ -74,14 +69,7 @@
           "group": "I18n Extractor"
         }
       ]
-    },
-    "keybindings":[
-      {
-        "command": "extension.lbSelection2i18n",
-        "key": "Ctrl+Shift+t",
-        "description": "提取选中内容中的中文，需要快捷键操作"
-      }
-    ]
+    }
   },
   "scripts": {
     "lint": "yarn eslint .",
