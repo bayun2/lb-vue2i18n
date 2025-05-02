@@ -59,4 +59,37 @@ test('generateKeyPrefix', () => {
     ),
     'LBStockHolding_index_'
   );
+
+  assert.equal(
+    generateKeyPrefix(
+      './src/pages/user/profile/index.vue',
+      {
+        rootPath: './',
+        stripKeyPrefix: 'src_pages;src_components;src_utils',
+      } as any
+    ),
+    'user_profile_index_'
+  );
+
+  assert.equal(
+    generateKeyPrefix(
+      './src/components/Button/index.vue',
+      {
+        rootPath: './',
+        stripKeyPrefix: 'src_pages;src_components;src_utils',
+      } as any
+    ),
+    'Button_index_'
+  );
+
+  assert.equal(
+    generateKeyPrefix(
+      './src/utils/format/date.ts',
+      {
+        rootPath: './',
+        stripKeyPrefix: 'src_pages;src_components;src_utils',
+      } as any
+    ),
+    'format_date_'
+  );
 });

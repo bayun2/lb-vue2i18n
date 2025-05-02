@@ -22,7 +22,8 @@
   // 这个参数可以控制最大文件夹层数，比如设置 2，会用上面最大两层文件夹作为 key，生成的 key 会是 pages_users_index_1
   "keyPrefixMaxDepth": 5,
   // 生成 I18n key 的时候，去掉 key 的前缀
-  // 例如：例如：stripKeyPrefix: "src/pages"，原本生成 src_pages_users_show_100 会变成 users_show_100
+  // ex. stripKeyPrefix: "src_pages"，原本生成 src_pages_users_show_100 会变成 users_show_100
+  // 支持多个，使用 ; 分割 ex. stripKeyPrefix: "src_pages;src_components;src_utils"
   "stripKeyPrefix": ''
 }
 ```
