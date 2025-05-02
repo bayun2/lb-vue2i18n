@@ -28,7 +28,10 @@ const generateKeyPrefix = (file: string, config: IConfig): string => {
   pathStr = pathParts.join('_') + '_' + filename;
   let key = formatI18nKey(pathStr);
   if (config.stripKeyPrefix) {
-    key = formatI18nKey(key.replace(config.stripKeyPrefix, ''));
+    const stripKeys = config.stripKeyPrefix.split(';');
+    stripKeys.forEach((_key) => {
+      key = formatI18nKey(key.replace(_key, ''));
+    })
   }
 
   return key + '_';

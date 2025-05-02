@@ -17,7 +17,7 @@ export interface IConfig {
   /**
    * 生成 I18n key 的时候，去掉前缀
    *
-   * 例如：stripKeyPrefix: "src/pages"
+   * 例如：stripKeyPrefix: "src_pages"
    *
    * 原本生成 src_pages_users_show_100 会变成 users_show_100
    */
